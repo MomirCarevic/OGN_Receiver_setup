@@ -1,0 +1,134 @@
+1  2026-01-15 23:33:05 clear
+    2  2026-01-15 23:33:05 sudo raspi-config
+    3  2026-01-15 23:33:05 clear
+    4  2026-01-15 23:33:05 ping 8.8.8.8
+    5  2026-01-15 23:33:05 clear
+    6  2026-01-15 23:33:05 sudo apt update && sudo apt-get upgrade -y
+    7  2026-01-15 23:33:05 sudo apt-get install rtl-sdr
+    8  2026-01-15 23:33:05 sudo apt-get -y install libconfig9 libjpeg8 libfftw3-dev lynx ntpdate ntp
+    9  2026-01-15 23:33:05 sudo apt install ntpsec-ntpdate
+   10  2026-01-15 23:33:05 sudo apt-get install libconfig-dev
+   11  2026-01-15 23:33:05 sudo apt-get -y install libconfig9 libjpeg-dev libfftw3-dev lynx ntpdate ntp # install the packages
+   12  2026-01-15 23:33:05 wget -qO- http://www.ijg.org/files/jpegsrc.v8d.tar.gz | tar -xz ; cd jpeg-8d/ # Download and uncompress the source
+   13  2026-01-15 23:33:05 ./configure --libdir=/usr/lib/ --build=aarch64-unknown-linux-gnu # Configure the library to compile on a Pi 3 or Pi 4
+   14  2026-01-15 23:33:05 make && sudo make install # Compile and install the library
+   15  2026-01-15 23:33:05 cd .. ; rm -fr jpeg-8d/ # Optional cleanup
+   16  2026-01-15 23:33:05 wget -qO- http://clubhouse.sosaglidingclub.com/ogn/rtlsdr-ogn-bin-arm64-0.2.9_BullsEye.tgz | tar -xz # Download the updated version of OGN
+   17  2026-01-15 23:33:05 wget http://download.glidernet.org/rpi-gpu/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+   18  2026-01-15 23:33:05 tar xvzf rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+   19  2026-01-15 23:33:05 cd rtlsdr-ogn
+   20  2026-01-15 23:33:05 mkfifo ogn-rf.fifo
+   21  2026-01-15 23:33:05 sudo chown root gsm_scan
+   22  2026-01-15 23:33:05 sudo chmod a+s gsm_scan
+   23  2026-01-15 23:33:05 sudo chown root ogn-rf
+   24  2026-01-15 23:33:05 sudo chmod a+s  ogn-rf
+   25  2026-01-15 23:33:05 ./gsm_scan --ppm 50 --gain 20
+   26  2026-01-15 23:33:05 cp Template.conf myPlace.conf
+   27  2026-01-15 23:33:05 vim myPlace.conf
+   28  2026-01-15 23:33:05 sudo apt-get install vim -y
+   29  2026-01-15 23:33:05 vim myPlace.conf
+   30  2026-01-15 23:33:05 sudo apt-get -y install procserv telnet
+   31  2026-01-15 23:33:05 sudo wget http://download.glidernet.org/common/service/rtlsdr-ogn -O /etc/init.d/rtlsdr-ogn
+   32  2026-01-15 23:33:05 sudo wget http://download.glidernet.org/common/service/rtlsdr-ogn.conf -O /etc/rtlsdr-ogn.conf
+   33  2026-01-15 23:33:05 sudo chmod +x /etc/init.d/rtlsdr-ogn
+   34  2026-01-15 23:33:05 sudo update-rc.d rtlsdr-ogn defaults
+   35  2026-01-15 23:33:05 sudo vim /etc/rtlsdr-ogn.conf
+   36  2026-01-15 23:33:05 dmsge
+   37  2026-01-15 23:33:05 dmesg
+   38  2026-01-15 23:33:05 clear
+   39  2026-01-15 23:33:05 sudo service rtlsdr-ogn start
+   40  2026-01-15 23:33:05 systemctl status rtlsdr-ogn.sevice
+   41  2026-01-15 23:33:05 journalctl
+   42  2026-01-15 23:33:05 journalctl -xeu rtlsdr-ogn.service
+   43  2026-01-15 23:33:05 sudo apt install ntp
+   44  2026-01-15 23:33:05 sudo apt install openntpd
+   45  2026-01-15 23:33:05 sudo apt install ntpsec -y
+   46  2026-01-15 23:33:05 systemctl status rtlsdr-ogn.sevice
+   47  2026-01-15 23:33:05 sudo systemctl restart rtlsdr-ogn
+   48  2026-01-15 23:33:05 systemctl status rtlsdr-ogn.service
+   49  2026-01-15 23:33:05 sudo apt install openntpd
+   50  2026-01-15 23:33:05 sudo vim /etc/init.d/rtlsdr-ogn
+   51  2026-01-15 23:33:05 vim ~/.vimrc
+   52  2026-01-15 23:33:05 source ~/.vimrc
+   53  2026-01-15 23:33:05 sudo vim /etc/init.d/rtlsdr-ogn
+   54  2026-01-15 23:33:05 sudo systemctl daemon-reload
+   55  2026-01-15 23:33:05 sudo systemctl restart rtlsdr-ogn
+   56  2026-01-15 23:33:05 sudo systemctl status rtlsdr-ogn
+   57  2026-01-15 23:33:05 rtlsdr-ogn --show-device
+   58  2026-01-15 23:33:05 ./rtlsdr-ogn --show-device
+   59  2026-01-15 23:33:05 ls -la
+   60  2026-01-15 23:33:05 vim rtlsdr-ogn.conf
+   61  2026-01-15 23:33:05 ./rtlsdr-ogn --show-device3
+   62  2026-01-15 23:33:05 lsubs
+   63  2026-01-15 23:33:05 lsusb
+   64  2026-01-15 23:33:05 rtlsdr-ogn
+   65  2026-01-15 23:33:05 ./rtlsdr-ogn
+   66  2026-01-15 23:33:05 vim rtlsdr-ogn.conf
+   67  2026-01-15 23:33:05 rtl-test
+   68  2026-01-15 23:33:05 clear
+   69  2026-01-15 23:33:05 ./rtlsdr-ogn
+   70  2026-01-15 23:33:05 sudo apt-get autoremove
+   71  2026-01-15 23:33:05 clear
+   72  2026-01-15 23:33:05 ls -la
+   73  2026-01-15 23:33:05 vim myPlace.conf
+   74  2026-01-15 23:33:05 ./rtlsdr-ogn status
+   75  2026-01-15 23:33:05 ./rtlsdr-ogn start
+   76  2026-01-15 23:33:05 sudo ./rtlsdr-ogn start
+   77  2026-01-15 23:33:05 sudo ./rtlsdr-ogn status
+   78  2026-01-15 23:33:05 sudo ./rtlsdr-ogn start
+   79  2026-01-15 23:33:05 sudo service rtlsdr-ogn status
+   80  2026-01-15 23:33:05 sudo vim /etc/init.d/rtlsdr-ogn
+   81  2026-01-15 23:33:05 sudo mkdir -p /var/log/rtlsdr-ogn
+   82  2026-01-15 23:33:05 sudo chown radiorpi:radiorpi /var/log/rtlsdr-ogn
+   83  2026-01-15 23:33:05 sudo service rtlsdr-ogn restart
+   84  2026-01-15 23:33:05 sudo service rtlsdr-ogn status
+   85  2026-01-15 23:33:05 tail -f /var/log/rtlsdr-ogn/*
+   86  2026-01-15 23:33:05 ls -la
+   87  2026-01-15 23:33:05 vim myPlace.conf
+   88  2026-01-15 23:33:05 vim rtlsdr-ogn.conf
+   89  2026-01-15 23:33:05 sudo service rtlsdr-ogn restart
+   90  2026-01-15 23:33:05 sudo service rtlsdr-ogn status
+   91  2026-01-15 23:33:05 clear
+   92  2026-01-15 23:33:05 sudo service rtlsdr-ogn status
+   93  2026-01-15 23:33:05 vim Template.conf
+   94  2026-01-15 23:33:05 vim rtlsdr-ogn
+   95  2026-01-15 23:33:05 hostname -s
+   96  2026-01-15 23:33:05 clear
+   97  2026-01-15 23:33:05 sudo service rtlsdr-ogn status
+   98  2026-01-15 23:33:05 vim myPlace.conf
+   99  2026-01-15 23:33:05 grep -R "/home/pi/rtlsdr-ogn" ~/rtlsdr-ogn /etc/init.d/rtlsdr-ogn
+  100  2026-01-15 23:33:05 ls
+  101  2026-01-15 23:33:05 grep "home/pi/rtlsdr-ogn"
+  102  2026-01-15 23:33:05 grep -R "home/pi/rtlsdr-ogn" .
+  103  2026-01-15 23:33:05 grep -R "home/pi/rtlsdr-ogn" ~/rtlsdr-ogn
+  104  2026-01-15 23:33:05 ls -la
+  105  2026-01-15 23:33:05 vim getEGM.sh
+  106  2026-01-15 23:33:05 vim gsm_scan
+  107  2026-01-15 23:33:05 vim install-rtl-sdr.sh
+  108  2026-01-15 23:33:05 vim install-service.sh
+  109  2026-01-15 23:33:05 vim ogn-decode
+  110  2026-01-15 23:33:05 vim ogn-rf.fifo
+  111  2026-01-15 23:33:05 cd rtlsdr-ogn
+  112  2026-01-15 23:33:05 ls
+  113  2026-01-15 23:33:05 ls -la
+  114  2026-01-15 23:33:05 vim rtlsdr-ogn
+  115  2026-01-15 23:33:05 vim rtlsdr-ogn.conf
+  116  2026-01-15 23:33:05 vim setup-rpi.sh
+  117  2026-01-15 23:33:05 vim Template.conf
+  118  2026-01-15 23:33:05 sudo vim /etc/rtlsdr-ogn.conf
+  119  2026-01-15 23:33:05 sudo service rtlsdr-ogn stop
+  120  2026-01-15 23:33:05 cd rtlsdr-ogn
+  121  2026-01-15 23:33:05 ./gsm_scan --ppm 50 --gain 20
+  122  2026-01-15 23:33:05 sudo service rtlsdr-ogn start
+  123  2026-01-15 23:33:05 telnet localhost 50000
+  124  2026-01-15 23:33:05 sudo service rtlsdr-ogn stop
+  125  2026-01-15 23:33:05 sudo service rtlsdr-ogn start
+  126  2026-01-15 23:33:05 poweroff
+  127  2026-01-15 23:33:05 sudo poweroff
+  128  2026-01-15 23:40:12 export HISTTIMEFORMAT="%F %T "
+  129  2026-01-15 23:40:12 history
+  130  2026-01-15 23:40:34 clear
+  131  2026-01-15 23:40:39 history
+  132  2026-01-15 23:41:07 history 500
+  133  2026-01-15 23:45:46 clear
+  134  2026-01-15 23:45:51 history

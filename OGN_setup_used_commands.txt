@@ -1,0 +1,53 @@
+Commands used while setting up a receiver:
+
+sudo raspi-config 
+    -> 7 Advanced option (7)
+       A1 Expand Filesystem
+       OK to reboot
+       Finish on the main Menu
+       Yes when asked to reboot now.
+
+ping 8.8.8.8
+    -> ensure network connectivity
+
+sudo apt-get update && sudo apt-get upgrade -y
+
+sudo apt-get install rtl-sdr
+
+### Install required packages
+
+sudo apt-get -y install libfftw3-dev lynx openntpd ntpsec-ntpdate
+sudo apt-get install libconfig-dev
+sudo apt-get -y install libconfig9 libjpeg-dev libfftw3-dev lynx ntpdate ntp # install the packages
+wget -qO- http://www.ijg.org/files/jpegsrc.v8d.tar.gz | tar -xz ; cd jpeg-8d/ # Download and uncompress the source
+./configure --libdir=/usr/lib/ --build=aarch64-unknown-linux-gnu # Configure the library to compile on a Pi 3 or Pi 4
+make && sudo make install # Compile and install the library
+cd .. ; rm -fr jpeg-8d/ # Optional cleanup
+wget -qO- http://clubhouse.sosaglidingclub.com/ogn/rtlsdr-ogn-bin-arm64-0.2.9_BullsEye.tgz | tar -xz # Download the updated version of OGN
+
+wget http://download.glidernet.org/rpi-gpu/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+tar xvzf rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+
+cd rtlsdr-ogn
+mkfifo ogn-rf.fifo
+sudo chown root gsm_scan
+sudo chmod a+s gsm_scan
+sudo chown root ogn-rf
+sudo chmod a+s  ogn-rf
+./gsm_scan --ppm 50 --gain 20
+
+cp Template.conf myPlace.conf
+vim myPlace.conf
+
+sudo apt-get -y install procserv telnet 
+sudo wget http://download.glidernet.org/common/service/rtlsdr-ogn -O /etc/init.d/rtlsdr-ogn
+sudo wget http://download.glidernet.org/common/service/rtlsdr-ogn.conf -O /etc/rtlsdr-ogn.conf
+sudo chmod +x /etc/init.d/rtlsdr-ogn
+sudo update-rc.d rtlsdr-ogn defaults
+
+sudo nano /etc/rtlsdr-ogn.conf
+    -> MAKE SURE THAT PWD IS CORRECT!
+
+sudo service rtlsdr-ogn start
+
+sudo service rtlsdr-ogn stop
