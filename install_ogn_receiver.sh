@@ -78,15 +78,14 @@ rm -fr jpeg-8d/
 # Step 7: Download OGN software
 print_info "Step 7: Downloading OGN receiver software..."
 cd ~
-# Try the updated version first
-if wget -qO- http://clubhouse.sosaglidingclub.com/ogn/rtlsdr-ogn-bin-arm64-0.2.9_BullsEye.tgz | tar -xz 2>/dev/null; then
-    print_info "Downloaded OGN software (ARM64 BullsEye version)"
-else
-    print_warning "Falling back to standard RPI-GPU version..."
-    wget http://download.glidernet.org/rpi-gpu/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
-    tar xvzf rtlsdr-ogn-bin-RPI-GPU-latest.tgz
-    rm rtlsdr-ogn-bin-RPI-GPU-latest.tgz
-fi
+
+wget -qO- http://clubhouse.sosaglidingclub.com/ogn/rtlsdr-ogn-bin-arm64-0.2.9_BullsEye.tgz | tar -xz 2>/dev/null; then
+print_info "Downloaded OGN software (ARM64 BullsEye version)"
+
+wget http://download.glidernet.org/rpi-gpu/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+tar xvzf rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+
+rm rtlsdr-ogn-bin-RPI-GPU-latest.tgz
 
 # Step 8: Configure OGN software
 print_info "Step 8: Configuring OGN receiver..."
