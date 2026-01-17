@@ -63,7 +63,7 @@ sudo apt-get install -y rtl-sdr
 print_info "Step 5: Installing required packages..."
 sudo apt-get install -y libfftw3-dev lynx openntpd ntpsec-ntpdate
 sudo apt-get install -y libconfig-dev
-sudo apt-get install -y libconfig9 libjpeg-dev ntp
+sudo apt-get install -y libconfig9 libjpeg-dev ntpsec-ntpdate
 
 # Step 6: Install JPEG library
 print_info "Step 6: Installing JPEG library from source..."
