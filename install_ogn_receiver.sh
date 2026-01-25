@@ -104,7 +104,7 @@ read -p "Press Enter to start GSM scan..."
 # Step 10: Configuration file setup
 print_info "Step 10: Setting up configuration file..."
 SCRIPT_DIR="$HOME/OGN_Receiver_setup"
-bash "$SCRIPT_DIR/autoMakeMyPlace.sh"
+source "$SCRIPT_DIR/autoMakeMyPlace.sh"
 
 # Step 11: Install procserv and telnet
 print_info "Step 11: Installing procserv and telnet..."
@@ -138,14 +138,14 @@ sudo cp /etc/rtlsdr-ogn.conf /etc/rtlsdr-ogn.conf.backup.$(date +%Y%m%d_%H%M%S)
 # Replace PWD and username in the config file
 print_info "Updating configuration file..."
 
-cat > /etc/rtlsdr-ogn.conf << EOF
+sudo tee /etc/rtlsdr-ogn.conf > /dev/null << EOF
 #shellbox configuration file
 #Starts commands inside a "box" with a telnet-like server.
 #Contact the shell with: telnet <hostname> <port>
 #Syntax:
 #port  user     directory                 command       args
-50000  $USER /home/$USER/rtlsdr-ogn    ./ogn-rf     ${OGN_CONFIG_FILE.conf}
-50001  $USER /home/$USER/rtlsdr-ogn    ./ogn-decode ${OGN_CONFIG_FILE.conf}
+50000  $USER /home/$USER/rtlsdr-ogn    ./ogn-rf     ${OGN_CONFIG_FILE}
+50001  $USER /home/$USER/rtlsdr-ogn    ./ogn-decode ${OGN_CONFIG_FILE}
 EOF
 
 echo "Configuration updated successfully for user: $USER"
@@ -178,7 +178,7 @@ print_info "================================"
 print_info "Installation Complete!"
 print_info "================================"
 print_info "Next steps:"
-print_info "1. Verify your configuration in: ~/rtlsdr-ogn/${OGN_CONFIG_FILE.conf}"
+print_info "1. Verify your configuration in: ~/rtlsdr-ogn/$OGN_CONFIG_FILE"
 print_info "2. Verify service configuration in: /etc/rtlsdr-ogn.conf"
 print_info "3. Start the service with: sudo service rtlsdr-ogn start"
 print_info "4. Check logs with: sudo service rtlsdr-ogn status"
