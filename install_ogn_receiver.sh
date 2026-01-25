@@ -63,7 +63,7 @@ sudo apt-get install -y rtl-sdr
 print_info "Step 5: Installing required packages..."
 sudo apt-get install -y libfftw3-dev lynx openntpd ntpsec-ntpdate
 sudo apt-get install -y libconfig-dev
-sudo apt-get install -y libconfig9 libjpeg-dev ntpsec-ntpdate
+sudo apt-get install -y libconfig11 libconfig++11 libjpeg-dev ntpsec-ntpdate
 
 # Step 6: Install JPEG library
 print_info "Step 6: Installing JPEG library from source..."
@@ -79,13 +79,11 @@ rm -fr jpeg-8d/
 print_info "Step 7: Downloading OGN receiver software..."
 cd ~
 
-wget -qO- http://clubhouse.sosaglidingclub.com/ogn/rtlsdr-ogn-bin-arm64-0.2.9_BullsEye.tgz | tar -xz 2>/dev/null; then
-print_info "Downloaded OGN software (ARM64 BullsEye version)"
-
-wget http://download.glidernet.org/rpi-gpu/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
-tar xvzf rtlsdr-ogn-bin-RPI-GPU-latest.tgz
-
-rm rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+if wget http://download.glidernet.org/rpi-gpu/rtlsdr-ogn-bin-RPI-GPU-latest.tgz; then
+    tar xvzf rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+    rm rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+    echo -e "\nDownalod of binary for RPi successful!\n"
+fi
 
 # Step 8: Configure OGN software
 print_info "Step 8: Configuring OGN receiver..."
@@ -111,7 +109,7 @@ if [ ! -f myPlace.conf ]; then
     print_warning "You MUST edit this file with your station details before starting the service!"
     print_warning "Edit with: nano ~/rtlsdr-ogn/myPlace.conf"
     read -p "Press Enter to edit the configuration now, or Ctrl+C to exit and edit later..."
-    nano myPlace.conf
+    vim myPlace.conf
 else
     print_info "Configuration file already exists"
 fi
@@ -133,7 +131,7 @@ OGN_DIR=$(pwd)
 print_warning "Current directory: $OGN_DIR"
 print_warning "You MUST ensure /etc/rtlsdr-ogn.conf has the correct PWD setting!"
 read -p "Press Enter to edit /etc/rtlsdr-ogn.conf now, or Ctrl+C to skip..."
-sudo nano /etc/rtlsdr-ogn.conf
+sudo vim /etc/rtlsdr-ogn.conf
 
 # Step 14: Start service
 print_info "Step 14: Starting OGN receiver service..."
