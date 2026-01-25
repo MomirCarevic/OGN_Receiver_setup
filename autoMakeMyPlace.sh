@@ -8,6 +8,8 @@ NC='\033[0m' # No Color
 
 echo -e "${BLUE}=== OGN Configuration File Generator ===${NC}\n"
 
+cd $HOME/rtlsdr-ogn
+
 # Check if Template.conf exists
 if [ ! -f "Template.conf" ]; then
     echo -e "${RED}Error: Template.conf not found in current directory${NC}"

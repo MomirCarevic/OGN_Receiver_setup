@@ -103,12 +103,8 @@ read -p "Press Enter to start GSM scan..."
 
 # Step 10: Configuration file setup
 print_info "Step 10: Setting up configuration file..."
-cd ~/rtlsdr-ogn
-./autoMakeMyPlace.sh
-
-# Source the autoMakeMyPlace script to create config and export the filename
-#SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-#source "$SCRIPT_DIR/autoMakeMyPlace.sh"
+SCRIPT_DIR="$HOME/OGN_Receiver_setup"
+bash "$SCRIPT_DIR/autoMakeMyPlace.sh"
 
 # Step 11: Install procserv and telnet
 print_info "Step 11: Installing procserv and telnet..."
