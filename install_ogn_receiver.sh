@@ -103,16 +103,12 @@ read -p "Press Enter to start GSM scan..."
 
 # Step 10: Configuration file setup
 print_info "Step 10: Setting up configuration file..."
-if [ ! -f myPlace.conf ]; then
-    cp Template.conf myPlace.conf
-    print_warning "Configuration file created: ~/rtlsdr-ogn/myPlace.conf"
-    print_warning "You MUST edit this file with your station details before starting the service!"
-    print_warning "Edit with: nano ~/rtlsdr-ogn/myPlace.conf"
-    read -p "Press Enter to edit the configuration now, or Ctrl+C to exit and edit later..."
-    vim myPlace.conf
-else
-    print_info "Configuration file already exists"
-fi
+cd ~/rtlsdr-ogn
+./autoMakeMyPlace.sh
+
+# Source the autoMakeMyPlace script to create config and export the filename
+#SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+#source "$SCRIPT_DIR/autoMakeMyPlace.sh"
 
 # Step 11: Install procserv and telnet
 print_info "Step 11: Installing procserv and telnet..."
@@ -126,12 +122,46 @@ sudo chmod +x /etc/init.d/rtlsdr-ogn
 sudo update-rc.d rtlsdr-ogn defaults
 
 # Step 13: Configure service
-print_info "Step 13: Configuring service settings..."
+# Get current directory and username
 OGN_DIR=$(pwd)
-print_warning "Current directory: $OGN_DIR"
-print_warning "You MUST ensure /etc/rtlsdr-ogn.conf has the correct PWD setting!"
-read -p "Press Enter to edit /etc/rtlsdr-ogn.conf now, or Ctrl+C to skip..."
-sudo vim /etc/rtlsdr-ogn.conf
+CURRENT_USER=$(whoami)
+
+print_info "Current directory: $OGN_DIR"
+print_info "Current user: $CURRENT_USER"
+
+# Check if config file exists
+if [ ! -f "/etc/rtlsdr-ogn.conf" ]; then
+    print_error "/etc/rtlsdr-ogn.conf not found!"
+    exit 1
+fi
+
+# Backup the original config file
+print_info "Creating backup of /etc/rtlsdr-ogn.conf..."
+sudo cp /etc/rtlsdr-ogn.conf /etc/rtlsdr-ogn.conf.backup.$(date +%Y%m%d_%H%M%S)
+
+# Replace PWD and username in the config file
+print_info "Updating configuration file..."
+
+cat > /etc/rtlsdr-ogn.conf << EOF
+#shellbox configuration file
+#Starts commands inside a "box" with a telnet-like server.
+#Contact the shell with: telnet <hostname> <port>
+#Syntax:
+#port  user     directory                 command       args
+50000  $USER /home/$USER/rtlsdr-ogn    ./ogn-rf     ${OGN_CONFIG_FILE.conf}
+50001  $USER /home/$USER/rtlsdr-ogn    ./ogn-decode ${OGN_CONFIG_FILE.conf}
+EOF
+
+echo "Configuration updated successfully for user: $USER"
+
+# Verify the changes
+print_info "Configuration updated successfully!"
+
+# Ask if user wants to manually review/edit
+read -p "Configuration has been updated. Edit manually? (y/n): " manual_edit
+if [[ "$manual_edit" =~ ^[Yy]$ ]]; then
+    sudo vim /etc/rtlsdr-ogn.conf
+fi
 
 # Step 14: Start service
 print_info "Step 14: Starting OGN receiver service..."
@@ -152,7 +182,7 @@ print_info "================================"
 print_info "Installation Complete!"
 print_info "================================"
 print_info "Next steps:"
-print_info "1. Verify your configuration in: ~/rtlsdr-ogn/myPlace.conf"
+print_info "1. Verify your configuration in: ~/rtlsdr-ogn/${OGN_CONFIG_FILE.conf}"
 print_info "2. Verify service configuration in: /etc/rtlsdr-ogn.conf"
 print_info "3. Start the service with: sudo service rtlsdr-ogn start"
 print_info "4. Check logs with: sudo service rtlsdr-ogn status"
